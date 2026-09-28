@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net" modified="2023-10-12T00:00:00.000Z" agent="Mozilla/5.0" version="22.0.4" type="device">
+  <diagram id="use_case_diagram" name="Diagramme de Cas d'Utilisation">
+    <mxGraphModel dx="1200" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- ======================= SYSTEM BOUNDARY ======================= -->
+        <mxCell id="system_boundary" value="SportConnect Pro (Serveur Natif Node.js)" style="swimlane;whiteSpace=wrap;html=1;startSize=23;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="250" y="40" width="380" height="780" as="geometry" />
+        </mxCell>
+        
+        <!-- ======================= ACTORS ======================= -->
+        
+        <!-- 1. Usager -->
+        <mxCell id="actor_usager" value="Usager&#10;(Adhérent / Famille)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="150" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- 2. Administrateur -->
+        <mxCell id="actor_admin" value="Administrateur&#10;(Direction des Sports)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="500" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ======================= USE CASES ======================= -->
+        
+        <!-- Use cases for Usager -->
+        <mxCell id="uc_inscrire" value="S&#39;inscrire à une activité" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="system_boundary">
+          <mxGeometry x="90" y="60" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_devis" value="Consulter le devis tarifaire" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="system_boundary">
+          <mxGeometry x="90" y="150" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Use cases for Admin -->
+        <mxCell id="uc_gerer_infrastructures" value="Gérer les infrastructures (ERP)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
+          <mxGeometry x="90" y="270" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_gerer_associations" value="Gérer les associations partenaires" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
+          <mxGeometry x="90" y="360" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_planifier_creneaux" value="Planifier les créneaux d&#39;activités" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
+          <mxGeometry x="90" y="450" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_gerer_adherents" value="Gérer les adhérents et familles" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
+          <mxGeometry x="90" y="540" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_suivre_inscriptions" value="Suivre les inscriptions et file d&#39;attente" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
+          <mxGeometry x="90" y="630" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_consulter_dashboard" value="Consulter le tableau de bord (KPIs)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
+          <mxGeometry x="90" y="700" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ======================= CONNECTIONS ======================= -->
+        
+        <!-- Usager to Use Cases -->
+        <mxCell id="edge1" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_usager" target="uc_inscrire">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_usager" target="uc_devis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Admin to Use Cases -->
+        <mxCell id="edge3" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_gerer_infrastructures">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge4" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_gerer_associations">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge5" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_planifier_creneaux">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge6" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_gerer_adherents">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge7" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_suivre_inscriptions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge8" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_consulter_dashboard">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

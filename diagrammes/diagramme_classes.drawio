@@ -1,0 +1,151 @@
+<mxfile host="65bd71144e">
+    <diagram id="class_diagram" name="Diagramme de Classes">
+        <mxGraphModel dx="1316" dy="702" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="c_facilities" value="Facilities" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="50" width="220" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_facilities_attrs" value="+ id: SERIAL (PK)&lt;br&gt;&lt;br&gt;+ name: VARCHAR(150)&lt;br&gt;&lt;br&gt;+ address: TEXT&lt;br&gt;&lt;br&gt;+ erp_capacity: INT&lt;br&gt;&lt;br&gt;+ is_divisible: BOOLEAN&lt;br&gt;&lt;br&gt;+ created_at: TIMESTAMP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c_facilities">
+                    <mxGeometry y="26" width="220" height="144" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_associations" value="Associations" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="50" width="240" height="136" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_associations_attrs" value="+ id: SERIAL (PK)&lt;br&gt;&lt;br&gt;+ name: VARCHAR(150)&lt;br&gt;&lt;br&gt;+ contact_email: VARCHAR(150)&lt;br&gt;&lt;br&gt;+ phone: VARCHAR(30)&lt;br&gt;&lt;br&gt;+ created_at: TIMESTAMP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c_associations">
+                    <mxGeometry y="26" width="240" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_activities" value="Activities" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="50" width="260" height="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_activities_attrs" value="+ id: SERIAL (PK)&lt;br&gt;&lt;br&gt;+ association_id: INT (FK)&lt;br&gt;&lt;br&gt;+ facility_id: INT (FK)&lt;br&gt;&lt;br&gt;+ sub_zone: VARCHAR(50)&lt;br&gt;&lt;br&gt;+ name: VARCHAR(150)&lt;br&gt;&lt;br&gt;+ target_category: VARCHAR(50)&lt;br&gt;&lt;br&gt;+ base_price: NUMERIC(10, 2)&lt;br&gt;&lt;br&gt;+ max_capacity: INT&lt;br&gt;&lt;br&gt;+ is_high_risk: BOOLEAN&lt;br&gt;&lt;br&gt;+ day_of_week: VARCHAR(20)&lt;br&gt;&lt;br&gt;+ start_time: TIME&lt;br&gt;&lt;br&gt;+ end_time: TIME&lt;br&gt;&lt;br&gt;+ created_at: TIMESTAMP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c_activities">
+                    <mxGeometry y="26" width="260" height="284" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_families" value="Families" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="420" width="220" height="116" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_families_attrs" value="+ id: SERIAL (PK)&lt;br&gt;&lt;br&gt;+ family_name: VARCHAR(100)&lt;br&gt;&lt;br&gt;+ quotient_familial: NUMERIC(10, 2)&lt;br&gt;&lt;br&gt;+ created_at: TIMESTAMP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c_families">
+                    <mxGeometry y="26" width="220" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_members" value="Members" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="400" width="250" height="290" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_members_attrs" value="+ id: SERIAL (PK)&lt;br&gt;&lt;br&gt;+ family_id: INT (FK)&lt;br&gt;&lt;br&gt;+ first_name: VARCHAR(100)&lt;br&gt;&lt;br&gt;+ last_name: VARCHAR(100)&lt;br&gt;&lt;br&gt;+ birth_date: DATE&lt;br&gt;&lt;br&gt;+ is_resident: BOOLEAN&lt;br&gt;&lt;br&gt;+ has_pass_sport: BOOLEAN&lt;br&gt;&lt;br&gt;+ medical_cert_date: DATE&lt;br&gt;&lt;br&gt;+ medical_status: VARCHAR(30)&lt;br&gt;&lt;br&gt;+ created_at: TIMESTAMP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c_members">
+                    <mxGeometry y="26" width="250" height="264" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_registrations" value="Registrations" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="270" width="240" height="176" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_registrations_attrs" value="+ id: SERIAL (PK)&lt;br&gt;&lt;br&gt;+ activity_id: INT (FK)&lt;br&gt;&lt;br&gt;+ member_id: INT (FK)&lt;br&gt;&lt;br&gt;+ final_price: NUMERIC(10, 2)&lt;br&gt;&lt;br&gt;+ payment_plan: VARCHAR(20)&lt;br&gt;&lt;br&gt;+ status: VARCHAR(30)&lt;br&gt;&lt;br&gt;+ created_at: TIMESTAMP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c_registrations">
+                    <mxGeometry y="26" width="240" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_waiting_list" value="Waiting_List" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="490" width="240" height="176" as="geometry"/>
+                </mxCell>
+                <mxCell id="c_waiting_list_attrs" value="+ id: SERIAL (PK)&lt;br&gt;&lt;br&gt;+ activity_id: INT (FK)&lt;br&gt;&lt;br&gt;+ member_id: INT (FK)&lt;br&gt;&lt;br&gt;+ priority_score: INT&lt;br&gt;&lt;br&gt;+ status: VARCHAR(30)&lt;br&gt;&lt;br&gt;+ deadline_confirmation: TIMESTAMP&lt;br&gt;&lt;br&gt;+ created_at: TIMESTAMP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="c_waiting_list">
+                    <mxGeometry y="26" width="240" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;endFill=0;startArrow=none;startFill=0;strokeWidth=1;" parent="1" source="c_facilities" target="c_activities" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="320" y="128"/>
+                            <mxPoint x="320" y="198"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel1_lbl1" value="1" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel1">
+                    <mxGeometry x="-0.9" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel1_lbl2" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel1">
+                    <mxGeometry x="0.8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;endFill=0;startArrow=none;startFill=0;strokeWidth=1;" parent="1" source="c_associations" target="c_activities" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="730" y="118"/>
+                            <mxPoint x="730" y="198"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel2_lbl1" value="1" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel2">
+                    <mxGeometry x="-0.9" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel2_lbl2" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel2">
+                    <mxGeometry x="0.8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;endFill=0;startArrow=none;startFill=0;strokeWidth=1;" parent="1" source="c_families" target="c_members" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="330" y="478"/>
+                            <mxPoint x="330" y="518"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel3_lbl1" value="0..1" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel3">
+                    <mxGeometry x="-0.9" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel3_lbl2" value="1..*" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel3">
+                    <mxGeometry x="0.8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;endFill=0;startArrow=none;startFill=0;strokeWidth=1;" parent="1" source="c_activities" target="c_registrations" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="730" y="260"/>
+                            <mxPoint x="730" y="358"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel4_lbl1" value="1" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel4">
+                    <mxGeometry x="-0.9" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel4_lbl2" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel4">
+                    <mxGeometry x="0.8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;endFill=0;startArrow=none;startFill=0;strokeWidth=1;" parent="1" source="c_members" target="c_registrations" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="730" y="518"/>
+                            <mxPoint x="730" y="358"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel5_lbl1" value="1" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel5">
+                    <mxGeometry x="-0.9" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel5_lbl2" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel5">
+                    <mxGeometry x="0.8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;endFill=0;startArrow=none;startFill=0;strokeWidth=1;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="760" y="265"/>
+                            <mxPoint x="760" y="563"/>
+                        </Array>
+                        <mxPoint x="660" y="265" as="sourcePoint"/>
+                        <mxPoint x="800" y="563" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel6_lbl1" value="1" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel6">
+                    <mxGeometry x="-0.9" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel6_lbl2" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel6">
+                    <mxGeometry x="0.8" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;endFill=0;startArrow=none;startFill=0;strokeWidth=1;" parent="1" source="c_members" target="c_waiting_list" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="730" y="578"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rel7_lbl1" value="1" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel7">
+                    <mxGeometry x="-0.9" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel7_lbl2" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=bottom;fontStyle=1;fontSize=12;" connectable="0" vertex="1" parent="rel7">
+                    <mxGeometry x="0.8" relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
