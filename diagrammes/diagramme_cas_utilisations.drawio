@@ -1,88 +1,79 @@
-<mxfile host="app.diagrams.net" modified="2023-10-12T00:00:00.000Z" agent="Mozilla/5.0" version="22.0.4" type="device">
-  <diagram id="use_case_diagram" name="Diagramme de Cas d'Utilisation">
-    <mxGraphModel dx="1200" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        
-        <!-- ======================= SYSTEM BOUNDARY ======================= -->
-        <mxCell id="system_boundary" value="SportConnect Pro (Serveur Natif Node.js)" style="swimlane;whiteSpace=wrap;html=1;startSize=23;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
-          <mxGeometry x="250" y="40" width="380" height="780" as="geometry" />
-        </mxCell>
-        
-        <!-- ======================= ACTORS ======================= -->
-        
-        <!-- 1. Usager -->
-        <mxCell id="actor_usager" value="Usager&#10;(Adhérent / Famille)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
-          <mxGeometry x="80" y="150" width="40" height="80" as="geometry" />
-        </mxCell>
-
-        <!-- 2. Administrateur -->
-        <mxCell id="actor_admin" value="Administrateur&#10;(Direction des Sports)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
-          <mxGeometry x="80" y="500" width="40" height="80" as="geometry" />
-        </mxCell>
-
-        <!-- ======================= USE CASES ======================= -->
-        
-        <!-- Use cases for Usager -->
-        <mxCell id="uc_inscrire" value="S&#39;inscrire à une activité" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="system_boundary">
-          <mxGeometry x="90" y="60" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_devis" value="Consulter le devis tarifaire" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="system_boundary">
-          <mxGeometry x="90" y="150" width="200" height="60" as="geometry" />
-        </mxCell>
-
-        <!-- Use cases for Admin -->
-        <mxCell id="uc_gerer_infrastructures" value="Gérer les infrastructures (ERP)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
-          <mxGeometry x="90" y="270" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_gerer_associations" value="Gérer les associations partenaires" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
-          <mxGeometry x="90" y="360" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_planifier_creneaux" value="Planifier les créneaux d&#39;activités" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
-          <mxGeometry x="90" y="450" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_gerer_adherents" value="Gérer les adhérents et familles" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
-          <mxGeometry x="90" y="540" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_suivre_inscriptions" value="Suivre les inscriptions et file d&#39;attente" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
-          <mxGeometry x="90" y="630" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="uc_consulter_dashboard" value="Consulter le tableau de bord (KPIs)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system_boundary">
-          <mxGeometry x="90" y="700" width="200" height="60" as="geometry" />
-        </mxCell>
-
-        <!-- ======================= CONNECTIONS ======================= -->
-        
-        <!-- Usager to Use Cases -->
-        <mxCell id="edge1" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_usager" target="uc_inscrire">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="edge2" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_usager" target="uc_devis">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        
-        <!-- Admin to Use Cases -->
-        <mxCell id="edge3" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_gerer_infrastructures">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="edge4" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_gerer_associations">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="edge5" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_planifier_creneaux">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="edge6" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_gerer_adherents">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="edge7" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_suivre_inscriptions">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="edge8" value="" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="actor_admin" target="uc_consulter_dashboard">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-      </root>
-    </mxGraphModel>
-  </diagram>
+<mxfile host="65bd71144e">
+    <diagram id="use_case_diagram" name="Diagramme de Cas d&#39;Utilisation">
+        <mxGraphModel dx="1789" dy="850" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="system_boundary" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=23;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="Gestion de Flotte Routière (API)" vertex="1">
+                    <mxGeometry height="960" width="380" x="250" y="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_1" parent="system_boundary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Gérer les camions, remorques, pneus" vertex="1">
+                    <mxGeometry height="60" width="200" x="90" y="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_2" parent="system_boundary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Créer et assigner les trajets" vertex="1">
+                    <mxGeometry height="60" width="200" x="90" y="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_3" parent="system_boundary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Configurer règles de maintenance" vertex="1">
+                    <mxGeometry height="60" width="200" x="90" y="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_4" parent="system_boundary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Consulter les rapports" vertex="1">
+                    <mxGeometry height="60" width="200" x="90" y="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_5" parent="system_boundary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Gérer les comptes chauffeurs" vertex="1">
+                    <mxGeometry height="60" width="200" x="90" y="420" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_6" parent="system_boundary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Consulter la liste de ses trajets" vertex="1">
+                    <mxGeometry height="60" width="200" x="90" y="510" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_7" parent="system_boundary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Télécharger l&#39;ordre de mission PDF" vertex="1">
+                    <mxGeometry height="60" width="200" x="90" y="600" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_8" parent="system_boundary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Mettre à jour le statut du trajet" vertex="1">
+                    <mxGeometry height="60" width="200" x="90" y="690" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_9" parent="system_boundary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Saisir kilométrage et gasoil" vertex="1">
+                    <mxGeometry height="60" width="200" x="90" y="780" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_10" parent="system_boundary" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Ajouter une remarque état véhicule" vertex="1">
+                    <mxGeometry height="60" width="200" x="90" y="870" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor_admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Admin" vertex="1">
+                    <mxGeometry height="80" width="40" x="80" y="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor_chauffeur" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Chauffeur" vertex="1">
+                    <mxGeometry height="80" width="40" x="100" y="620" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_admin_1" edge="1" parent="1" source="actor_admin" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" target="uc_1" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_admin_2" edge="1" parent="1" source="actor_admin" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" target="uc_2" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_admin_3" edge="1" parent="1" source="actor_admin" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" target="uc_3" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_admin_4" edge="1" parent="1" source="actor_admin" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" target="uc_4" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_admin_5" edge="1" parent="1" source="actor_admin" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" target="uc_5" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_chauffeur_1" edge="1" parent="1" source="actor_chauffeur" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" target="uc_6" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_chauffeur_2" edge="1" parent="1" source="actor_chauffeur" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" target="uc_7" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_chauffeur_3" edge="1" parent="1" source="actor_chauffeur" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" target="uc_8" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_chauffeur_4" edge="1" parent="1" source="actor_chauffeur" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" target="uc_9" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_chauffeur_5" edge="1" parent="1" source="actor_chauffeur" style="edgeStyle=none;html=1;endArrow=none;endFill=0;" target="uc_10" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
 </mxfile>
