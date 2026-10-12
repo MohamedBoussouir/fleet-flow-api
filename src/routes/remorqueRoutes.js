@@ -9,5 +9,8 @@ router.use(roleMiddleware('Admin'));
 
 router.post('/', RemorqueController.create);
 router.get('/', RemorqueController.getAll);
+router.get('/:id', RemorqueController.getById);
+router.put('/:id', RemorqueController.update);
+router.patch('/:id/archive', RemorqueController.archive);
 
 module.exports = router;

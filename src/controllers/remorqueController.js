@@ -23,6 +23,45 @@ class RemorqueController {
       res.status(500).json({ message: 'Erreur serveur', error: error.message });
     }
   }
+  static async getById(req, res) {
+    try {
+      const remorque = await Remorque.findById(req.params.id);
+      if (!remorque) {
+        return res.status(404).json({ message: 'Remorque non trouvée' });
+      }
+      return res.status(200).json(remorque);
+    } catch (error) {
+      return res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    }
+  }
+
+  static async update(req, res) {
+    try {
+      const remorque = await Remorque.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!remorque) {
+        return res.status(404).json({ message: 'Remorque non trouvée' });
+      }
+      return res.status(200).json({ message: 'Remorque mise à jour avec succès', remorque });
+    } catch (error) {
+      return res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    }
+  }
+
+  static async archive(req, res) {
+    try {
+      const remorque = await Remorque.findByIdAndUpdate(
+        req.params.id,
+        { statut: 'hors-service' },
+        { new: true }
+      );
+      if (!remorque) {
+        return res.status(404).json({ message: 'Remorque non trouvée' });
+      }
+      return res.status(200).json({ message: 'Remorque archivée avec succès', remorque });
+    } catch (error) {
+      return res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    }
+  }
 }
 
 module.exports = RemorqueController;

@@ -20,6 +20,17 @@ class PneuController {
       res.status(500).json({ message: 'Erreur serveur', error: error.message });
     }
   }
+  static async update(req, res) {
+    try {
+      const pneu = await Pneu.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!pneu) {
+        return res.status(404).json({ message: 'Pneu non trouvé' });
+      }
+      return res.status(200).json({ message: 'Pneu mis à jour avec succès', pneu });
+    } catch (error) {
+      return res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    }
+  }
 }
 
 module.exports = PneuController;

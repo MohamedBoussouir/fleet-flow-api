@@ -9,5 +9,6 @@ router.use(roleMiddleware('Admin'));
 
 router.post('/', PneuController.create);
 router.get('/', PneuController.getByCamion);
+router.put('/:id', PneuController.update);
 
 module.exports = router;

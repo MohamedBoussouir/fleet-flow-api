@@ -48,6 +48,27 @@ class CamionController {
       res.status(500).json({ message: 'Erreur serveur', error: error.message });
     }
   }
+  static async archive(req, res, next) {
+    try {
+      const camion = await Camion.findByIdAndUpdate(
+        req.params.id,
+        { statut: 'hors-service' },
+        { new: true }
+      );
+
+      if (!camion) {
+        return res.status(404).json({ message: 'Camion non trouvé' });
+      }
+
+      return res.status(200).json({
+        message: 'Camion archivé avec succès',
+        camion
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
+
 
 module.exports = CamionController;

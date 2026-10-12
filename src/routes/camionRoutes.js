@@ -13,5 +13,6 @@ router.post('/', CamionController.create);
 router.get('/', CamionController.getAll);
 router.get('/:id', CamionController.getById);
 router.put('/:id', CamionController.update);
+router.patch('/:id/archive', CamionController.archive);
 
 module.exports = router;

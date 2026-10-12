@@ -1,0 +1,577 @@
+openapi: 3.0.0
+info:
+  title: API de Gestion de Flotte de Transport Routier
+  description: Documentation REST API pour YouCode (Sprint 2). Couvre l'Authentification, les Chauffeurs, Camions, Remorques, Pneus, Trajets, Maintenance et Rapports.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+    description: Serveur Local de développement
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+paths:
+  # ==========================================
+  # 1. AUTHENTIFICATION & CHAUFFEURS
+  # ==========================================
+  /auth/register:
+    post:
+      summary: Enregistrer un nouvel utilisateur (Admin ou Chauffeur)
+      tags: [Authentification]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nom:
+                  type: string
+                  example: "Admin Flotte"
+                email:
+                  type: string
+                  example: "admin@fleet.local"
+                password:
+                  type: string
+                  example: "Password123@"
+                role:
+                  type: string
+                  enum: [Admin, Chauffeur]
+                  example: "Admin"
+      responses:
+        '201':
+          description: Utilisateur enregistré avec succès
+
+  /auth/login:
+    post:
+      summary: Connecter un utilisateur (Admin ou Chauffeur)
+      tags: [Authentification]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "admin@fleet.local"
+                password:
+                  type: string
+                  example: "Password123@"
+      responses:
+        '200':
+          description: Connexion réussie, retourne le token JWT
+        '401':
+          description: Mot de passe incorrect
+        '403':
+          description: Compte suspendu
+
+  /chauffeurs:
+    get:
+      summary: Lister tous les chauffeurs (Admin)
+      tags: [Chauffeurs]
+      responses:
+        '200':
+          description: Liste des chauffeurs récupérée
+
+  /chauffeurs/{id}/statut:
+    patch:
+      summary: Modifier le statut d'un chauffeur (Admin)
+      tags: [Chauffeurs]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                statut:
+                  type: string
+                  enum: [actif, suspendu]
+                  example: "suspendu"
+      responses:
+        '200':
+          description: Statut mis à jour
+
+  # ==========================================
+  # 2. CAMIONS (Admin)
+  # ==========================================
+  /camions:
+    get:
+      summary: Lister tous les camions
+      tags: [Camions]
+      responses:
+        '200':
+          description: Liste des camions
+    post:
+      summary: Créer un nouveau camion
+      tags: [Camions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                immatriculation:
+                  type: string
+                  example: "12345-A-26"
+                modele:
+                  type: string
+                  example: "Volvo FH16"
+                kilometrageTotal:
+                  type: number
+                  example: 120000
+                statut:
+                  type: string
+                  example: "disponible"
+      responses:
+        '201':
+          description: Camion créé avec succès
+
+  /camions/{id}:
+    get:
+      summary: Détails d'un camion spécifique
+      tags: [Camions]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails du camion
+    put:
+      summary: Modifier un camion
+      tags: [Camions]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                statut:
+                  type: string
+                  example: "disponible"
+                kilometrageTotal:
+                  type: number
+                  example: 125000
+      responses:
+        '200':
+          description: Camion mis à jour
+
+  /camions/{id}/archive:
+    patch:
+      summary: Archiver un camion (Soft delete)
+      tags: [Camions]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isArchived:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: Camion archivé
+
+  # ==========================================
+  # 3. REMORQUES (Admin)
+  # ==========================================
+  /remorques:
+    get:
+      summary: Lister toutes les remorques
+      tags: [Remorques]
+      responses:
+        '200':
+          description: Liste des remorques
+    post:
+      summary: Créer une nouvelle remorque
+      tags: [Remorques]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                immatriculation:
+                  type: string
+                  example: "99887-B-26"
+                capaciteKg:
+                  type: number
+                  example: 32000
+                statut:
+                  type: string
+                  example: "disponible"
+      responses:
+        '201':
+          description: Remorque créée avec succès
+
+  /remorques/{id}:
+    get:
+      summary: Détails d'une remorque
+      tags: [Remorques]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails de la remorque
+    put:
+      summary: Modifier une remorque
+      tags: [Remorques]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                capaciteKg:
+                  type: number
+                  example: 35000
+                statut:
+                  type: string
+                  example: "disponible"
+      responses:
+        '200':
+          description: Remorque mise à jour
+
+  /remorques/{id}/archive:
+    patch:
+      summary: Archiver une remorque
+      tags: [Remorques]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isArchived:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: Remorque archivée
+
+  # ==========================================
+  # 4. PNEUS (Admin)
+  # ==========================================
+  /pneus:
+    get:
+      summary: Lister les pneus d'un camion
+      tags: [Pneus]
+      parameters:
+        - in: query
+          name: camionId
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des pneus
+    post:
+      summary: Créer et assigner un pneu à un camion
+      tags: [Pneus]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                numeroSerie:
+                  type: string
+                  example: "MICHELIN-XMULTI-001"
+                camionId:
+                  type: string
+                position:
+                  type: string
+                  example: "AV-G"
+                kilometrageUsure:
+                  type: number
+                  example: 5000
+                seuilUsureKm:
+                  type: number
+                  example: 60000
+                etat:
+                  type: string
+                  example: "bon"
+      responses:
+        '201':
+          description: Pneu créé et assigné
+
+  /pneus/{id}:
+    put:
+      summary: Mettre à jour l'état d'un pneu
+      tags: [Pneus]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                kilometrageUsure:
+                  type: number
+                  example: 58000
+                etat:
+                  type: string
+                  example: "a_surveiller"
+      responses:
+        '200':
+          description: Pneu mis à jour
+
+  # ==========================================
+  # 5. TRAJETS & RÈGLES MÉTIER
+  # ==========================================
+  /trajets:
+    post:
+      summary: Créer et assigner un trajet (Admin)
+      tags: [Trajets]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                siteDepart:
+                  type: string
+                  example: "Youssoufia"
+                siteArrivee:
+                  type: string
+                  example: "Jorf Lasfar"
+                marchandise:
+                  type: string
+                  example: "Phosphate Brut"
+                dateDepartPrevue:
+                  type: string
+                  format: date-time
+                  example: "2026-10-10T07:00:00.000Z"
+                dateArriveePrevue:
+                  type: string
+                  format: date-time
+                  example: "2026-10-10T15:00:00.000Z"
+                camionId:
+                  type: string
+                remorqueId:
+                  type: string
+                chauffeurId:
+                  type: string
+      responses:
+        '201':
+          description: Trajet créé avec succès
+        '409':
+          description: Conflit d'assignation
+
+  /trajets/mes-trajets:
+    get:
+      summary: Consulter mes trajets (Chauffeur)
+      tags: [Trajets]
+      responses:
+        '200':
+          description: Liste des trajets du chauffeur connecté
+
+  /trajets/{id}/statut:
+    patch:
+      summary: Mettre à jour le statut du trajet (Chauffeur)
+      tags: [Trajets]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                statut:
+                  type: string
+                  enum: [en cours, terminé]
+                  example: "terminé"
+                kmDepart:
+                  type: number
+                  example: 125000
+                kmArrivee:
+                  type: number
+                  example: 125420
+                volumeGasoil:
+                  type: number
+                  example: 130
+                coutGasoil:
+                  type: number
+                  example: 1560
+                remarques:
+                  type: string
+                  example: "Trajet sans incidents"
+      responses:
+        '200':
+          description: Statut mis à jour avec succès
+        '400':
+          description: Erreur de validation (ex. Retour arrière interdit, Km Arrivée <= Km Départ)
+
+  /trajets/{id}/pdf:
+    get:
+      summary: Télécharger l'ordre de mission en PDF
+      tags: [Trajets]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Fichier PDF généré
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+
+  # ==========================================
+  # 6. MAINTENANCE & ALERTES (Admin)
+  # ==========================================
+  /maintenance/regles:
+    post:
+      summary: Configurer une règle de maintenance
+      tags: [Maintenance]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  example: "Vidange"
+                periodiciteKm:
+                  type: number
+                  example: 20000
+                seuilAlerteKm:
+                  type: number
+                  example: 18000
+      responses:
+        '201':
+          description: Règle configurée
+
+  /maintenance/alertes:
+    get:
+      summary: Consulter les alertes actives
+      tags: [Maintenance]
+      responses:
+        '200':
+          description: Liste des alertes actives
+
+  /maintenance/alertes/{id}/resoudre:
+    patch:
+      summary: Résoudre / Clôturer une alerte
+      tags: [Maintenance]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                statut:
+                  type: string
+                  example: "resolue"
+                commentaire:
+                  type: string
+                  example: "Vidange et révision effectuées"
+      responses:
+        '200':
+          description: Alerte résolue avec succès
+
+  # ==========================================
+  # 7. RAPPORTS & STATISTIQUES (Admin)
+  # ==========================================
+  /rapports/global:
+    get:
+      summary: Consulter le rapport global (Consommation & Km)
+      tags: [Rapports]
+      responses:
+        '200':
+          description: Rapport global généré avec succès
+
+  /rapports/camions/{id}:
+    get:
+      summary: Consulter le rapport par véhicule
+      tags: [Rapports]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Rapport du véhicule généré avec succès
