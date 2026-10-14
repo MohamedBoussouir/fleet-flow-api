@@ -1,0 +1,857 @@
+{
+  "info": {
+    "_postman_id": "6950a48b-fdc9-4552-8a0f-d2d890d6c51d",
+    "name": "Fleet Flow API - Complete Test Suite",
+    "description": "Suite complète de tests pour l'API Fleet Flow (Auth, Camions, Remorques, Pneus, Trajets, Statuts, Maintenance & PDF)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53034241"
+  },
+  "item": [
+    {
+      "name": "1. Authentification",
+      "item": [
+        {
+          "name": "Register Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Admin Flotte\",\n  \"email\": \"admin@fleet.local\",\n  \"password\": \"Password123@\",\n  \"role\": \"Admin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Chauffeur",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.user && res.user.id) {",
+                  "    pm.collectionVariables.set('chauffeurId', res.user.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Karim Driver\",\n  \"email\": \"karim@fleet.local\",\n  \"password\": \"Password123@\",\n  \"role\": \"Chauffeur\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Admin (Auto-Save accessToken)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.accessToken) {",
+                  "    pm.collectionVariables.set('accessToken', res.accessToken);",
+                  "    console.log('Admin accessToken saved successfully!');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@fleet.local\",\n  \"password\": \"Password123@\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Chauffeur (Auto-Save chauffeurToken)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.accessToken) {",
+                  "    pm.collectionVariables.set('chauffeurToken', res.accessToken);",
+                  "    console.log('Chauffeur Token saved!');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"karim@fleet.local\",\n  \"password\": \"Password123@\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test Login Mot de passe erroné (Expected 401)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@fleet.local\",\n  \"password\": \"WrongPassword\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Camions (Admin)",
+      "item": [
+        {
+          "name": "Créer un Camion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "const id = res._id || (res.camion && res.camion._id) || (res.data && res.data._id);",
+                  "if (id) {",
+                  "    pm.collectionVariables.set('camionId', id);",
+                  "    console.log('camionId saved:', id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"immatriculation\": \"12345-A-26\",\n  \"modele\": \"Volvo FH16\",\n  \"kilometrageTotal\": 120000,\n  \"statut\": \"disponible\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/camions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "camions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lister tous les Camions",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/camions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "camions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Détails d'un Camion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/camions/{{camionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "camions",
+                "{{camionId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modifier un Camion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"statut\": \"disponible\",\n  \"kilometrageTotal\": 125000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/camions/{{camionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "camions",
+                "{{camionId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Remorques (Admin)",
+      "item": [
+        {
+          "name": "Créer une Remorque",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "const id = res._id || (res.remorque && res.remorque._id) || (res.data && res.data._id);",
+                  "if (id) {",
+                  "    pm.collectionVariables.set('remorqueId', id);",
+                  "    console.log('remorqueId saved:', id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"immatriculation\": \"99887-B-26\",\n  \"capaciteKg\": 32000,\n  \"statut\": \"disponible\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/remorques",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "remorques"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lister toutes les Remorques",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/remorques",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "remorques"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Pneus (Admin)",
+      "item": [
+        {
+          "name": "Créer & Assigner un Pneu au Camion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "const id = res._id || (res.pneu && res.pneu._id) || (res.data && res.data._id);",
+                  "if (id) {",
+                  "    pm.collectionVariables.set('pneuId', id);",
+                  "    console.log('pneuId saved:', id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroSerie\": \"MICHELIN-XMULTI-001\",\n  \"camionId\": \"{{camionId}}\",\n  \"position\": \"AV-G\",\n  \"kilometrageUsure\": 5000,\n  \"seuilUsureKm\": 60000,\n  \"etat\": \"bon\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pneus",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pneus"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lister Pneus d'un Camion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pneus?camionId={{camionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pneus"
+              ],
+              "query": [
+                {
+                  "key": "camionId",
+                  "value": "{{camionId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Trajets & Règles Métier",
+      "item": [
+        {
+          "name": "Créer et Assigner un Trajet (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "const id = res._id || (res.trajet && res.trajet._id) || (res.data && res.data._id);",
+                  "if (id) {",
+                  "    pm.collectionVariables.set('trajetId', id);",
+                  "    console.log('trajetId saved:', id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"siteDepart\": \"Youssoufia\",\n  \"siteArrivee\": \"Jorf Lasfar\",\n  \"marchandise\": \"Phosphate Brut\",\n  \"dateDepartPrevue\": \"2026-10-10T07:00:00.000Z\",\n  \"dateArriveePrevue\": \"2026-10-10T15:00:00.000Z\",\n  \"camionId\": \"{{camionId}}\",\n  \"remorqueId\": \"{{remorqueId}}\",\n  \"chauffeurId\": \"{{chauffeurId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/trajets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trajets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test Conflit d'Assignation (Expected 409 Conflict)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"siteDepart\": \"Youssoufia\",\n  \"siteArrivee\": \"Casablanca\",\n  \"marchandise\": \"Engrais\",\n  \"dateDepartPrevue\": \"2026-10-10T09:00:00.000Z\",\n  \"dateArriveePrevue\": \"2026-10-10T12:00:00.000Z\",\n  \"camionId\": \"{{camionId}}\",\n  \"remorqueId\": \"{{remorqueId}}\",\n  \"chauffeurId\": \"{{chauffeurId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/trajets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trajets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consulter Mes Trajets (Chauffeur)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{chauffeurToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/trajets/mes-trajets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trajets",
+                "mes-trajets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mettre à jour Statut: à faire -> en cours (Chauffeur)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{chauffeurToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"statut\": \"en cours\",\n  \"kmDepart\": 125000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/trajets/{{trajetId}}/statut",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trajets",
+                "{{trajetId}}",
+                "statut"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mettre à jour Statut: en cours -> terminé (Chauffeur)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{chauffeurToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"statut\": \"termin\\u00e9\",\n  \"kmArrivee\": 125420,\n  \"volumeGasoil\": 130,\n  \"coutGasoil\": 1560,\n  \"remarques\": \"Trajet sans incidents, bon \\u00e9tat g\\u00e9n\\u00e9ral du camion\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/trajets/{{trajetId}}/statut",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trajets",
+                "{{trajetId}}",
+                "statut"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Télécharger Ordre de Mission en PDF",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{chauffeurToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/trajets/{{trajetId}}/pdf",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trajets",
+                "{{trajetId}}",
+                "pdf"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Maintenance & Alertes",
+      "item": [
+        {
+          "name": "Configurer Règles de Maintenance (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"Vidange\",\n  \"periodiciteKm\": 20000,\n  \"seuilAlerteKm\": 18000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/maintenance/regles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "maintenance",
+                "regles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consulter les Alertes de Maintenance Actives",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/maintenance/alertes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "maintenance",
+                "alertes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "New Folder",
+      "item": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "chauffeurToken",
+      "value": ""
+    },
+    {
+      "key": "chauffeurId",
+      "value": ""
+    },
+    {
+      "key": "camionId",
+      "value": ""
+    },
+    {
+      "key": "remorqueId",
+      "value": ""
+    },
+    {
+      "key": "pneuId",
+      "value": ""
+    },
+    {
+      "key": "trajetId",
+      "value": ""
+    }
+  ]
+}

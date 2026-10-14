@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mongodb:
     image: mongo:6.0
@@ -10,6 +8,28 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  redis:
+    image: redis:7-alpine
+    container_name: fleet_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  minio:
+    image: elestio/minio
+    container_name: fleet_minio
+    restart: always
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    volumes:
+      - minio_data:/bitnami/minio/data
+
   api:
     build: .
     container_name: fleet_api
@@ -19,15 +39,24 @@ services:
     environment:
       - PORT=5000
       - MONGO_URI=mongodb://mongodb:27017/fleet_management
+      - REDIS_URL=redis://redis:6379
       - JWT_SECRET=your_jwt_secret_key_here
       - REFRESH_TOKEN_SECRET=your_refresh_token_key_here
       - CHOKIDAR_USEPOLLING=true
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     command: npm run dev
     depends_on:
       - mongodb
+      - redis
+      - minio
 
 volumes:
   mongo_data:
+  redis_data:
+  minio_data:

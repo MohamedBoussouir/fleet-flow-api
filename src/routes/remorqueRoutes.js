@@ -4,13 +4,17 @@ const RemorqueController = require('../controllers/remorqueController');
 const authMiddleware = require('../middlewares/authMiddleware');
 const roleMiddleware = require('../middlewares/roleMiddleware');
 
-router.use(authMiddleware);
-router.use(roleMiddleware('Admin'));
+const validateDto = require('../middlewares/validateDto');
+const { createRemorqueSchema, updateRemorqueSchema } = require('../dtos/remorqueDto');
 
-router.post('/', RemorqueController.create);
-router.get('/', RemorqueController.getAll);
-router.get('/:id', RemorqueController.getById);
-router.put('/:id', RemorqueController.update);
-router.patch('/:id/archive', RemorqueController.archive);
+router.use(authMiddleware);
+
+router.get('/', roleMiddleware(['Admin', 'Chauffeur']), RemorqueController.getAll);
+router.get('/:id', roleMiddleware(['Admin', 'Chauffeur']), RemorqueController.getById);
+
+
+router.post('/', roleMiddleware(['Admin']), validateDto(createRemorqueSchema), RemorqueController.create);
+router.put('/:id', roleMiddleware(['Admin']), validateDto(updateRemorqueSchema), RemorqueController.update);
+router.patch('/:id/archive', roleMiddleware(['Admin']), RemorqueController.archive);
 
 module.exports = router;

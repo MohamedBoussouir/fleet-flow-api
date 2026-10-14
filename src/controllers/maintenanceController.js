@@ -72,25 +72,26 @@ class MaintenanceController {
     }
   }
   static async resoudreAlerte(req, res, next) {
-  try {
-    const alerte = await Maintenance.findByIdAndUpdate(
-      req.params.id,
-      { statut: 'resolue' }, 
-      { new: true }
-    );
+    try {
+      const alerte = await Maintenance.findByIdAndUpdate(
+        req.params.id,
+        { statut: 'resolue' }, 
+        { new: true }
+      );
 
-    if (!alerte) {
-      return res.status(404).json({ message: 'Alerte non trouvée' });
+      if (!alerte) {
+        return res.status(404).json({ message: 'Alerte non trouvée' });
+      }
+
+      return res.status(200).json({
+        message: 'Alerte résolue avec succès',
+        alerte
+      });
+    } catch (error) {
+      
+      return next(error);
     }
-
-    return res.status(200).json({
-      message: 'Alerte résolue avec succès',
-      alerte
-    });
-  } catch (error) {
-    return res.status(500).json({ message: 'Erreur serveur', error: error.message });
   }
-}
 }
 
 module.exports = MaintenanceController;

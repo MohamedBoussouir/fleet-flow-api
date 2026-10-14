@@ -5,9 +5,11 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const roleMiddleware = require('../middlewares/roleMiddleware');
 
 
+const validateDto = require('../middlewares/validateDto');
+const { updateStatutChauffeurSchema } = require('../dtos/chauffeurDto');
+
 router.use(authMiddleware);
 router.use(roleMiddleware(['Admin']));
-
 
 router.get('/', async (req, res, next) => {
   try {
@@ -18,12 +20,12 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.patch('/:id/status', async (req, res, next) => {
+
+router.patch('/:id/status', validateDto(updateStatutChauffeurSchema), async (req, res, next) => {
   try {
     const { statut } = req.body; 
-    if (!['actif', 'suspendu'].includes(statut)) {
-      return res.status(400).json({ message: "Le statut doit être 'actif' ou 'suspendu'" });
-    }
+
+  
 
     const chauffeur = await User.findOneAndUpdate(
       { _id: req.params.id, role: 'Chauffeur' },
